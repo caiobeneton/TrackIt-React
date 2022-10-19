@@ -26,7 +26,7 @@ export default function Cadastro() {
         const promise = axios.post(URL, user)
 
         promise.then(resposta => {
-            console.log(resposta)
+            console.log(resposta.data)
             navigate('/')
         })
 
