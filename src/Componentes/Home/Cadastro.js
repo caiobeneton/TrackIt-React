@@ -1,18 +1,41 @@
 import styled from "styled-components"
 import logo from "../../images/Group8.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ThreeDots } from "react-loader-spinner"
 import { useState } from "react"
+import axios from "axios"
 
 export default function Cadastro() {
     const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [nome, setNome] = useState('')
+    const [foto, setFoto] = useState('')
+    const navigate = useNavigate()
 
     function submit() {
-        if (loading === false) {
-            setLoading(true)
-        } else {
-            setLoading(false)
+        setLoading(true)
+        const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up'
+        const user = {
+            email: email,
+            name: nome,
+            image: foto,
+            password: senha
         }
+
+        const promise = axios.post(URL, user)
+
+        promise.then(resposta => {
+            console.log(resposta)
+            navigate('/')
+        })
+
+        promise.catch(err => {
+            console.log(err.response.data)
+            alert('Preencha os campos corretamente!')
+            setLoading(false)
+        })
+
     }
 
     return (
@@ -23,10 +46,11 @@ export default function Cadastro() {
                 </StyledLogo>
 
                 <Formulario loading={loading ? '0.7' : '1'}>
-                    <input type='text' placeholder="email" disabled={loading}></input>
-                    <input type='text' placeholder="senha" disabled={loading}></input>
-                    <input type='text' placeholder="nome" disabled={loading}></input>
-                    <input type='text' placeholder="foto" disabled={loading}></input>
+                    <input type='text' placeholder="email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="nome" value={nome} onChange={e => setNome(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="foto" value={foto} onChange={e => setFoto(e.target.value)} disabled={loading}></input>
+
                     <button type='submit' onClick={submit}>
                         {loading ? <ThreeDots width="51" height='13' color='#FFFFFF' visible={true}/> : 'Cadastrar'}
                     </button>
