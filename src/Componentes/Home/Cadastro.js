@@ -1,8 +1,20 @@
 import styled from "styled-components"
 import logo from "../../images/Group8.png"
 import { Link } from "react-router-dom"
+import { ThreeDots } from "react-loader-spinner"
+import { useState } from "react"
 
 export default function Cadastro() {
+    const [loading, setLoading] = useState(false)
+
+    function submit() {
+        if (loading === false) {
+            setLoading(true)
+        } else {
+            setLoading(false)
+        }
+    }
+
     return (
         <StyledContainer>
             <StyledWrapper>
@@ -10,12 +22,14 @@ export default function Cadastro() {
                     <img src={logo} alt={logo}></img>
                 </StyledLogo>
 
-                <Formulario>
-                    <input type='text' placeholder="email"></input>
-                    <input type='text' placeholder="senha"></input>
-                    <input type='text' placeholder="nome"></input>
-                    <input type='text' placeholder="foto"></input>
-                    <button type='submit'>Cadastrar</button>
+                <Formulario loading={loading ? '0.7' : '1'}>
+                    <input type='text' placeholder="email" disabled={loading}></input>
+                    <input type='text' placeholder="senha" disabled={loading}></input>
+                    <input type='text' placeholder="nome" disabled={loading}></input>
+                    <input type='text' placeholder="foto" disabled={loading}></input>
+                    <button type='submit' onClick={submit}>
+                        {loading ? <ThreeDots width="51" height='13' color='#FFFFFF' visible={true}/> : 'Cadastrar'}
+                    </button>
                 </Formulario>
 
                 <Link to={`/`}>
@@ -76,6 +90,10 @@ const Formulario = styled.div`
         font-size: 20px;
         font-weight: 400;
         color: #FFFFFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: ${props => props.loading};
     }
 `
 const LinkCad = styled.div`
