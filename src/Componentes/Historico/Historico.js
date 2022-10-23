@@ -5,21 +5,23 @@ import Header from "../Header";
 export default function Historico(){
     return(
         <>
+            <Header></Header>
             <StyledBody>
-                <Header></Header>
+                
                 <StlContent>
                     <h1>Historico</h1>
                     <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
                 </StlContent>
-                <Footer></Footer>
+                
             </StyledBody>
+            <Footer></Footer>
         </>
     )
 }
 
 const StyledBody = styled.div`
     background-color: #E5E5E5;
-    height: 530px;
+    height: 600px;
     width: 100%;
     margin-top: 70px;
 `

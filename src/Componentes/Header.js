@@ -22,8 +22,9 @@ const StyledHeader = styled.div`
     padding: 0 15px;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    position: absolute;
+    position: fixed;
     top: 0;
+    z-index: 1;
 `
 const StyledLogo = styled.div`
     img {
