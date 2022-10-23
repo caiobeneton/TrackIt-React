@@ -2,12 +2,12 @@ import styled from "styled-components"
 import Footer from "../Footer";
 import Header from "../Header";
 
-export default function Hoje(){
-    return (
+export default function Habitos(){
+    return(
         <>
             <StyledBody>
                 <Header></Header>
-                <h1>Hoje</h1>
+                <h1>Hábitos</h1>
                 <Footer></Footer>
             </StyledBody>
         </>
