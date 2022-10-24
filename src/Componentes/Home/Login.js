@@ -24,7 +24,6 @@ export default function Login(){
         const promise = axios.post(URL, user)
 
         promise.then(resposta => {
-            console.log(resposta.data)
             setUserImg(resposta.data.image)
             setToken(resposta.data.token)
             navigate('/hoje')
@@ -45,15 +44,15 @@ export default function Login(){
                 </StyledLogo>
 
                 <Formulario loading={loading ? '0.7' : '1'}>
-                    <input type='text' placeholder="email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}></input>
-                    <input type='text' placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} disabled={loading}></input>
-                    <button type='submit' onClick={submit}>
+                    <input type='text' placeholder="email" data-identifier="input-email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="senha" data-identifier="input-password" value={senha} onChange={e => setSenha(e.target.value)} disabled={loading}></input>
+                    <button data-identifier="login-btn" type='submit' onClick={submit}>
                         {loading ? <ThreeDots width="51" height='13' color='#FFFFFF' visible={true}/> : 'Entrar'}
                     </button>
                 </Formulario>
 
                 <Link to={`/cadastro`}>
-                    <LinkCad>Não tem uma conta? Cadastre-se!</LinkCad>
+                    <LinkCad data-identifier="sign-up-action">Não tem uma conta? Cadastre-se!</LinkCad>
                 </Link>
 
             </StyledWrapper>

@@ -10,7 +10,7 @@ export default function Footer() {
     return (
         <StyledFooter>
             <Link to={`/habitos`}>
-                <StlHabitos>Hábitos</StlHabitos>
+                <StlHabitos data-identifier="habit-page-action">Hábitos</StlHabitos>
             </Link>
             <Link to={`/hoje`}>
                 <StlHoje>
@@ -21,7 +21,7 @@ export default function Footer() {
                 </StlHoje>
             </Link>
             <Link to={`/historico`}>
-                <StlHistorico>Historico</StlHistorico>
+                <StlHistorico data-identifier="historic-page-action">Historico</StlHistorico>
             </Link>
         </StyledFooter>
     )

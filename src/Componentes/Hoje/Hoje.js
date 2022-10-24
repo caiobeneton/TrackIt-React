@@ -20,7 +20,6 @@ export default function Hoje() {
         const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today'
         const promise = axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
         promise.then(resposta => {
-            console.log(resposta.data)
             setHoje(resposta.data)
             const lista = resposta.data
             contagem(lista)
@@ -66,19 +65,19 @@ export default function Hoje() {
             <StyledBody>
                 <Header></Header>
                 <StyledContent>
-                    <Topo disp={count > 0 ? 'none' : 'inherit'}>
+                    <Topo data-identifier="today-infos" disp={count > 0 ? 'none' : 'inherit'}>
                         <h1>{now}</h1>
 
-                        <p>Nenhum hábito concluído ainda {count}</p>
-                        <Msg>{Math.round((count*100)/hoje.length)}% dos hábitos concluídos</Msg>
+                        <p>Nenhum hábito concluído ainda</p>
+                        <Msg disp={count === 0 ? "none" : "inherit"}>{Math.round((count*100)/hoje.length)}% dos hábitos concluídos</Msg>
                     </Topo>
                     {hoje.map((h) => <HabitoHoje key={h.id}>
-                        <Info>
+                        <Info data-identifier="today-infos">
                             <h1>{h.name}</h1>
                             <Frase>Sequencia atual: <Num feito={h.done ? "#8FC549" : "#BABABA"}>{h.currentSequence} dias</Num></Frase>
                             <p>Seu recorde: {h.highestSequence} dias</p>
                         </Info>
-                        <Check onClick={() => marcar(h.id, h.done)} feito={h.done ? "#8FC549" : "#ebebeb"}>
+                        <Check data-identifier="done-habit-btn" onClick={() => marcar(h.id, h.done)} feito={h.done ? "#8FC549" : "#ebebeb"}>
                             <ion-icon name="checkmark-outline"></ion-icon>
                         </Check>
                     </HabitoHoje>)}
@@ -176,4 +175,5 @@ const Msg = styled.div`
     font-weight: 400;
     font-size: 17.976px;
     color: #8FC549;
+    display: ${props => props.disp};
 `

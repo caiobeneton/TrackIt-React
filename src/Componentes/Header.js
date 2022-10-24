@@ -10,7 +10,7 @@ export default function Header(){
             <StyledLogo>
                 <img src={logo} alt={logo}></img>
             </StyledLogo>
-            <StyledProfile>
+            <StyledProfile data-identifier="avatar">
                 <img src={userImg} alt={userImg}></img>
             </StyledProfile>
         </StyledHeader>

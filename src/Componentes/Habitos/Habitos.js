@@ -22,7 +22,6 @@ export default function Habitos() {
 
         const promise = axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
         promise.then(resposta => {
-            console.log(resposta.data)
             setLista(resposta.data)
         })
         promise.catch(err => {
@@ -53,7 +52,6 @@ export default function Habitos() {
         }
         const promise = axios.post(URL, novoHabito, config)
         promise.then(resposta => {
-            console.log(resposta.data)
             setLoading(false)
             setHabito('')
             setSelect([])
@@ -72,7 +70,6 @@ export default function Habitos() {
             const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
             const promise = axios.delete(URL, { headers: { Authorization: `Bearer ${token}` } })
             promise.then(() => {
-                console.log('excluiu')
                 setControl(!control)
             })
             promise.catch(err => {
@@ -91,25 +88,25 @@ export default function Habitos() {
                 <StlContent lista={lista.length > 0 ? 'none' : 'inherit'}>
                     <Topo>
                         <h1>Meus hábitos</h1>
-                        <Add onClick={() => setExibe(!exibe)}>+</Add>
+                        <Add data-identifier="create-habit-btn" onClick={() => setExibe(!exibe)}>+</Add>
                     </Topo>
                     <Card disp={exibe}>
-                        <input type="text" placeholder="nome do hábito" value={habito} onChange={e => setHabito(e.target.value)} disabled={loading} ></input>
+                        <input type="text" data-identifier="input-habit-name" placeholder="nome do hábito" value={habito} onChange={e => setHabito(e.target.value)} disabled={loading} ></input>
                         <Semana>
-                            {dias.map((d, idx) => <Dias disabled={loading} cor={select.includes(idx)} onClick={() => adiciona(idx)} key={idx} >{d}</Dias>)}
+                            {dias.map((d, idx) => <Dias data-identifier="week-day-btn" disabled={loading} cor={select.includes(idx)} onClick={() => adiciona(idx)} key={idx} >{d}</Dias>)}
                         </Semana>
                         <Botoes>
-                            <Cancelar onClick={() => setExibe(!exibe)}>Cancelar</Cancelar>
-                            <Salvar loading={loading ? '0.7' : '1'} onClick={salvarHabito}>
+                            <Cancelar data-identifier="cancel-habit-create-btn" onClick={() => setExibe(!exibe)}>Cancelar</Cancelar>
+                            <Salvar data-identifier="save-habit-create-btn" loading={loading ? '0.7' : '1'} onClick={salvarHabito}>
                                 {loading ? <ThreeDots width="51" height='13' color='#FFFFFF' visible={true} /> : 'Salvar'}
                             </Salvar>
                         </Botoes>
                     </Card>
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    <p data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     {lista.map((h) => <Habito key={h.id}>
                         <Topo>
-                            <h1>{h.name}</h1>
-                            <ion-icon onClick={() => excluir(h.id)} name="trash-outline"></ion-icon>
+                            <h1 data-identifier="habit-name">{h.name}</h1>
+                            <ion-icon data-identifier="delete-habit-btn" onClick={() => excluir(h.id)} name="trash-outline"></ion-icon>
                         </Topo>
 
                         <Semana>

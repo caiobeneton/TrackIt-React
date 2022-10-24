@@ -46,10 +46,10 @@ export default function Cadastro() {
                 </StyledLogo>
 
                 <Formulario loading={loading ? '0.7' : '1'}>
-                    <input type='text' placeholder="email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}></input>
-                    <input type='text' placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} disabled={loading}></input>
-                    <input type='text' placeholder="nome" value={nome} onChange={e => setNome(e.target.value)} disabled={loading}></input>
-                    <input type='text' placeholder="foto" value={foto} onChange={e => setFoto(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="email" data-identifier="input-email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="senha" data-identifier="input-password" value={senha} onChange={e => setSenha(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="nome" data-identifier="input-name" value={nome} onChange={e => setNome(e.target.value)} disabled={loading}></input>
+                    <input type='text' placeholder="foto" data-identifier="input-photo" value={foto} onChange={e => setFoto(e.target.value)} disabled={loading}></input>
 
                     <button type='submit' onClick={submit}>
                         {loading ? <ThreeDots width="51" height='13' color='#FFFFFF' visible={true}/> : 'Cadastrar'}
@@ -57,7 +57,7 @@ export default function Cadastro() {
                 </Formulario>
 
                 <Link to={`/`}>
-                    <LinkCad>Já tem uma conta? Faça login!</LinkCad>
+                    <LinkCad data-identifier="back-to-login-action">Já tem uma conta? Faça login!</LinkCad>
                 </Link>
             </StyledWrapper>
         </StyledContainer>
