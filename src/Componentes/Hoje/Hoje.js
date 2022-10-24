@@ -7,9 +7,10 @@ import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../App";
 import axios from "axios";
 
+
 export default function Hoje() {
     const now = dayjs().locale('pt-br').format('dddd, DD/MM', 'pt-br')
-    const { token } = useContext(userContext)
+    const { token, setPorcent } = useContext(userContext)
     const [hoje, setHoje] = useState([])
     const [control, setControl] = useState(false)
     const [count, setCount] = useState(0)
@@ -32,6 +33,7 @@ export default function Hoje() {
     function contagem(lista) {
         setCount(0)
         lista.map((h) => h.done ? setCount(count + 1) : '')
+        setPorcent((count*100) / lista.length)
     }
 
     function marcar(id, feito) {

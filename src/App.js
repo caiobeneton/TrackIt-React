@@ -13,11 +13,12 @@ export default function App() {
 
     const [userImg, setUserImg] = useState("Teste")
     const [token, setToken] = useState('')
+    const [porcent, setPorcent] = useState(0)
 
     return (
         <BrowserRouter>
             <GlobalStyle></GlobalStyle>
-            <userContext.Provider value={{userImg, setUserImg, token, setToken}}>
+            <userContext.Provider value={{userImg, setUserImg, token, setToken, porcent, setPorcent}}>
                 <Routes>
                     <Route path="/" element={<Login></Login>}></Route>
                     <Route path="/cadastro" element={<Cadastro></Cadastro>}></Route>
