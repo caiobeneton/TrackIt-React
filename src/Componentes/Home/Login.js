@@ -2,14 +2,16 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from '../../images/Group8.png'
 import { ThreeDots } from "react-loader-spinner"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import axios from "axios"
+import { userContext } from "../../App"
 
 export default function Login(){
     const [loading, setLoading] = useState(false)
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
     const navigate = useNavigate()
+    const {setUserImg} = useContext(userContext)
 
     function submit() {
         setLoading(true)
@@ -23,6 +25,7 @@ export default function Login(){
 
         promise.then(resposta => {
             console.log(resposta.data)
+            setUserImg(resposta.data.image)
             navigate('/hoje')
         })
 

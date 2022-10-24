@@ -1,13 +1,18 @@
 import styled from "styled-components"
 import logo from '../images/TrackIt.png'
+import { useContext } from "react";
+import { userContext } from "../App"
 
 export default function Header(){
+    const {userImg} = useContext(userContext)
     return(
         <StyledHeader>
             <StyledLogo>
                 <img src={logo} alt={logo}></img>
             </StyledLogo>
-            <h1>Olá</h1>
+            <StyledProfile>
+                <img src={userImg} alt={userImg}></img>
+            </StyledProfile>
         </StyledHeader>
     )
 }
@@ -29,5 +34,12 @@ const StyledHeader = styled.div`
 const StyledLogo = styled.div`
     img {
         width: 97px;
+    }
+`
+const StyledProfile = styled.div`
+    img {
+        width: 51px;
+        height: 51px;
+        border-radius: 98px;
     }
 `

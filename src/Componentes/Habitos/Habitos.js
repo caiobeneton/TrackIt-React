@@ -3,11 +3,13 @@ import Footer from "../Footer";
 import Header from "../Header";
 
 export default function Habitos(){
+
+
     return(
         <>
             <StyledBody>
                 <Header></Header>
-                <h1>Hábitos</h1>
+                <h1>Habitos</h1>
                 <Footer></Footer>
             </StyledBody>
         </>

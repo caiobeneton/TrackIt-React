@@ -5,18 +5,26 @@ import Login from "./Componentes/Home/Login";
 import Historico from "./Componentes/Historico/Historico";
 import GlobalStyle from "./globalStyles";
 import Habitos from "./Componentes/Habitos/Habitos";
+import { createContext, useState } from "react";
 
-export default function App(){
+export const userContext = createContext()
+
+export default function App() {
+
+    const [userImg, setUserImg] = useState("Teste")
+
     return (
         <BrowserRouter>
             <GlobalStyle></GlobalStyle>
-            <Routes>
-                <Route path="/" element={<Login></Login>}></Route>
-                <Route path="/cadastro" element={<Cadastro></Cadastro>}></Route>
-                <Route path="/hoje" element={<Hoje></Hoje>}></Route>
-                <Route path="/historico" element={<Historico></Historico>}></Route>
-                <Route path="/habitos" element={<Habitos></Habitos>}></Route>
-            </Routes>
+            <userContext.Provider value={{userImg, setUserImg}}>
+                <Routes>
+                    <Route path="/" element={<Login></Login>}></Route>
+                    <Route path="/cadastro" element={<Cadastro></Cadastro>}></Route>
+                    <Route path="/hoje" element={<Hoje></Hoje>}></Route>
+                    <Route path="/historico" element={<Historico></Historico>}></Route>
+                    <Route path="/habitos" element={<Habitos></Habitos>}></Route>
+                </Routes>
+            </userContext.Provider>
         </BrowserRouter>
     )
 }
