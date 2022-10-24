@@ -22,6 +22,9 @@ export default function Hoje() {
         promise.then(resposta => {
             setHoje(resposta.data)
             const lista = resposta.data
+            let contador = 0
+            lista.map((h) => h.done ? contador +=1 : '')
+            setPorcent((contador*100) / lista.length)
             contagem(lista)
         })
         promise.catch(err => {
@@ -29,10 +32,11 @@ export default function Hoje() {
         })
     }, [token, control])
 
+
     function contagem(lista) {
         setCount(0)
         lista.map((h) => h.done ? setCount(count + 1) : '')
-        setPorcent((count*100) / lista.length)
+        //setPorcent((count*100) / lista.length)
     }
 
     function marcar(id, feito) {

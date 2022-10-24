@@ -16,7 +16,7 @@ export default function Footer() {
                 <StlHoje>
                     <div style={{width: 85, height: 85}}>
                         <CircularProgressbar value={porcent} text={"Hoje"} 
-                    styles={buildStyles({textColor: '#FFFFFF', trailColor: '#FFFFFF'})}/>
+                    styles={buildStyles({textColor: '#FFFFFF', trailColor: '#52B6FF', pathColor: '#FFFFFF'})}/>
                     </div>
                 </StlHoje>
             </Link>
