@@ -1,16 +1,74 @@
 import styled from "styled-components"
 import Footer from "../Footer";
 import Header from "../Header";
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+import { useContext, useEffect, useState } from "react";
+import { userContext } from "../../App";
+import axios from "axios";
 
-export default function Hoje(){
+export default function Hoje() {
+    const now = dayjs().locale('pt-br').format('dddd, DD/MM', 'pt-br')
+    const { token } = useContext(userContext)
+    const [hoje, setHoje] = useState([])
+    const [control, setControl] = useState(false)
+
+
+    useEffect(() => {
+        const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today'
+        const promise = axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
+        promise.then(resposta => {
+            console.log(resposta.data)
+            setHoje(resposta.data)
+        })
+        promise.catch(err => {
+            console.log(err.response.data)
+        })
+    }, [token, control])
+
+    function marcar(id, feito) {
+        if (feito === false) {
+            const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`
+            const promise = axios.post(URL, null, { headers: { Authorization: `Bearer ${token}` } })
+            promise.then(resposta => {
+                setControl(!control)
+            })
+            promise.catch(err => {
+                console.log(err.response.data)
+            })
+        } else {
+            const URLdel = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
+            const promise = axios.post(URLdel, null, { headers: { Authorization: `Bearer ${token}` } })
+            promise.then(resposta => {
+                setControl(!control)
+            })
+            promise.catch(err => {
+                console.log(err.response.data)
+            })
+        }
+        
+    }
+
     return (
         <>
             <StyledBody>
                 <Header></Header>
                 <StyledContent>
                     <Topo>
-                        <h1>Hoje</h1>
+                        <h1>{now}</h1>
+
+                        <p>Nenhum hábito concluído ainda</p>
                     </Topo>
+                    {hoje.map((h) => <HabitoHoje key={h.id}>
+                        <Info>
+                            <h1>{h.name}</h1>
+                            <p>Sequencia atual: <Num feito={h.done ? "#8FC549" : "#BABABA"}>{h.currentSequence} dias</Num></p>
+                            <p>Seu recorde: {h.highestSequence} dias</p>
+                        </Info>
+                        <Check onClick={() => marcar(h.id, h.done)} feito={h.done ? "#8FC549" : "#ebebeb"}>
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                        </Check>
+                    </HabitoHoje>)}
                 </StyledContent>
                 <Footer></Footer>
             </StyledBody>
@@ -36,10 +94,56 @@ const StyledContent = styled.div`
         color: #126BA5;
         margin-bottom: 17px;
     }
+    p{
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        color: #BABABA;
+    }
 `
 const Topo = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
     padding-right: 10px;
+`
+const HabitoHoje = styled.div`
+    width: 340px;
+    height: 94px;
+    background-color: #FFFFFF;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 10px;
+`
+const Info = styled.div`
+    h1{
+        font-family: 'Lexend Deca', sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        color: #666666;
+    }
+    p {
+        font-size: 14px;
+    }
+`
+const Check = styled.div`
+    width: 70px;
+    height: 70px;
+    background-color: ${props => props.feito};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ion-icon {
+        font-size: 42px;
+        color: #FFFFFF;
+    }
+`
+const Num = styled.div`
+    color: ${props => props.feito};
+    display: inline;
 `
