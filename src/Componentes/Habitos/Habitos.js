@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components"
 import Footer from "../Footer";
 import Header from "../Header";
+import { userContext } from "../../App";
+import axios from "axios";
 
 export default function Habitos(){
 
@@ -9,6 +11,7 @@ export default function Habitos(){
     const [select, setSelect] = useState([])
     const [habito, setHabito] = useState("")
     const [exibe, setExibe] = useState(false)
+    const {token} = useContext(userContext)
 
     function adiciona(idx){
         if (select.includes(idx)) {
@@ -17,6 +20,26 @@ export default function Habitos(){
         } else {
             setSelect([...select, idx])
         }
+    }
+
+    function salvarHabito(){
+        const URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits'
+        const novoHabito = {
+            name: habito,
+            days: select
+        }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        const promise = axios.post(URL, novoHabito, config)
+        promise.then(resposta => {
+            console.log(resposta.data)
+        })
+        promise.catch(err => {
+            console.log(err.response.data)
+        })
     }
 
     
@@ -36,7 +59,7 @@ export default function Habitos(){
                         </Semana>
                         <Botoes>
                             <Cancelar>Cancelar</Cancelar>
-                            <Salvar>Salvar</Salvar>
+                            <Salvar onClick={salvarHabito}>Salvar</Salvar>
                         </Botoes>
                     </Card>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>

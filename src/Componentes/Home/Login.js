@@ -11,7 +11,7 @@ export default function Login(){
     const [senha, setSenha] = useState('')
     const [email, setEmail] = useState('')
     const navigate = useNavigate()
-    const {setUserImg} = useContext(userContext)
+    const {setUserImg, setToken} = useContext(userContext)
 
     function submit() {
         setLoading(true)
@@ -26,6 +26,7 @@ export default function Login(){
         promise.then(resposta => {
             console.log(resposta.data)
             setUserImg(resposta.data.image)
+            setToken(resposta.data.token)
             navigate('/hoje')
         })
 
