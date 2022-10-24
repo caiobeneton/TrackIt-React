@@ -12,6 +12,7 @@ export default function Hoje() {
     const { token } = useContext(userContext)
     const [hoje, setHoje] = useState([])
     const [control, setControl] = useState(false)
+    const [count, setCount] = useState(0)
 
 
     useEffect(() => {
@@ -20,11 +21,18 @@ export default function Hoje() {
         promise.then(resposta => {
             console.log(resposta.data)
             setHoje(resposta.data)
+            const lista = resposta.data
+            contagem(lista)
         })
         promise.catch(err => {
             console.log(err.response.data)
         })
     }, [token, control])
+
+    function contagem(lista) {
+        setCount(0)
+        lista.map((h) => h.done ? setCount(count + 1) : '')
+    }
 
     function marcar(id, feito) {
         if (feito === false) {
@@ -49,20 +57,23 @@ export default function Hoje() {
         
     }
 
+    
+
     return (
         <>
             <StyledBody>
                 <Header></Header>
                 <StyledContent>
-                    <Topo>
+                    <Topo disp={count > 0 ? 'none' : 'inherit'}>
                         <h1>{now}</h1>
 
-                        <p>Nenhum hábito concluído ainda</p>
+                        <p>Nenhum hábito concluído ainda {count}</p>
+                        <Msg>{Math.round((count*100)/hoje.length)}% dos hábitos concluídos</Msg>
                     </Topo>
                     {hoje.map((h) => <HabitoHoje key={h.id}>
                         <Info>
                             <h1>{h.name}</h1>
-                            <p>Sequencia atual: <Num feito={h.done ? "#8FC549" : "#BABABA"}>{h.currentSequence} dias</Num></p>
+                            <Frase>Sequencia atual: <Num feito={h.done ? "#8FC549" : "#BABABA"}>{h.currentSequence} dias</Num></Frase>
                             <p>Seu recorde: {h.highestSequence} dias</p>
                         </Info>
                         <Check onClick={() => marcar(h.id, h.done)} feito={h.done ? "#8FC549" : "#ebebeb"}>
@@ -108,6 +119,9 @@ const Topo = styled.div`
     justify-content: space-between;
     box-sizing: border-box;
     padding-right: 10px;
+    p {
+        display: ${props => props.disp};
+    }
 `
 const HabitoHoje = styled.div`
     width: 340px;
@@ -146,4 +160,18 @@ const Check = styled.div`
 const Num = styled.div`
     color: ${props => props.feito};
     display: inline;
+`
+const Frase = styled.div`
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #BABABA;
+`
+const Msg = styled.div`
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17.976px;
+    color: #8FC549;
 `
